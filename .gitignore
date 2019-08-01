@@ -3,3 +3,7 @@ env
 *.bak
 .idea/
 venv/
+*.pem
+*.p12
+downloads/
+logs/

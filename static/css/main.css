@@ -1,3 +1,14 @@
+p{
+    font-size: 2em;
+}
+li{
+    font-size: 1.5em;
+}
+#loader{
+    position: relative;
+    top: -30em;
+    right: -18em;
+}
 .bg-grey {
     background-color: #efefef;
     padding: 1rem;
@@ -16,8 +27,4 @@
     font-family: monospace;
     font-size: 80%;
     padding: .5rem;
-}
-
-#csr-form {
-    display: none;
 }
