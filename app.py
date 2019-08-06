@@ -2,6 +2,7 @@ from __future__ import absolute_import
 import os
 import logging
 import time
+
 from pathlib import Path
 from flask import Flask, request, render_template, abort, send_from_directory
 import OpenSSL.crypto as crypt
@@ -27,13 +28,12 @@ server_errors = []
 
 
 @app.route('/')
-@app.route('/index')
 def index():
     return render_template('index.html')
 
 
 @app.route('/generate', methods=['POST'])
-def generate_csr() -> html:
+def generate_csr():
     """
     Receive form data and generate csr and private key.
     """
@@ -71,18 +71,17 @@ def generate_pem(nic_id: str, user_directory: str, password: str, csr: str):
         server_errors.append(error)
         logger.error('Unable to create path: %s -- %s', error, nic_id)
 
-    opts = webdriver.ChromeOptions()
-    opts.add_argument('--no-sandbox')
-    # opts.add_argument('--headless')
-    opts.add_argument('--disable-dev-shm-usage')
-    log_path = base_directory + '/logs/chromedriver.log'
-    prefs = {'download.default_directory': downloads}
-    opts.add_experimental_option("prefs", prefs)
+    options = webdriver.FirefoxOptions()
+    options.add_argument('-headless')
+    profile = webdriver.FirefoxProfile()
+    profile.set_preference('browser.download.folderList', 2)
+    profile.set_preference('browser.download.manager.showWhenStarting', False)
+    profile.set_preference('browser.download.dir', downloads)
+    profile.set_preference("browser.helperApps.neverAsk.saveToDisk", 'application/x-pem-file')
 
     try:
-        # browser = webdriver.Chrome(base_directory + '/chromedriver', options=opts,
-        #                        service_args=['--verbose', '--log-directory=' + log_path])
-        browser = webdriver.Chrome(base_directory + '/chromedriver', options=opts)
+        browser = webdriver.Firefox(executable_path=base_directory + '/geckodriver', options=options,
+                                    firefox_profile=profile, log_path=base_directory + '/logs/geckodriver.log')
     except WebDriverException as error:
         logger.error("Unable to launch chrome driver: %s -- NIC Handle: %s", error, nic_id)
         server_errors.append(error)
