@@ -46,6 +46,6 @@ strong, a{
 }
 
 #csr-modal > div.modal-container.tall.no-max-height {
-    height: 80vh;
+    height: 30vh;
     background: rgba(0,0,0,0.3);
 }
