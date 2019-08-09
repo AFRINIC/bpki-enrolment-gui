@@ -1,23 +1,21 @@
 
 $(function() {
 
-    $(".close").on("click", function() {
-        $(this).closest(".modal").removeClass("active");
-    });
-
    $("#csr-form").submit(function (e) {
        e.preventDefault();
-       $("#csr-modal").addClass("active");
+       if($("#password").val().trim() !== ''){
+           $("#csr-modal").addClass("active");
+           $.post("/generate", $(this).serialize())
+               .done(function (data) {
+                   // console.log(data);
+                   $("html").html(data);
+               })
+               .fail(function (data) {
+                   // console.log(data.responseText);
+                   $("html").html(data.responseText);
+               })
+       }
 
-       $.post("/generate", $(this).serialize())
-           .done(function (data) {
-               console.log(data);
-               $("html").html(data);
-           })
-           .fail(function (data) {
-               console.log(data.responseText);
-               $("html").html(data.responseText);
-           })
 
    });
 
@@ -36,7 +34,7 @@ $(function() {
         //nicIds = ["IS001-AFRINIC","ATU1-AFRINIC"];
         // console.log(nicIds);
         for (let nicId in nicIds) {
-            console.log(nicId);
+            // console.log(nicId);
             // let option = document.createElement("option");
             // let textValue = nicIds[nic_id];
             // option.value = textValue;
@@ -44,7 +42,7 @@ $(function() {
             // select.append(option);
 
           let option = document.createElement("option");
-            console.log(nicIds[nicId]);
+            //console.log(nicIds[nicId]);
             let textValue = nicIds[nicId].handle;
             option.value = textValue;
             option.innerText = textValue;
@@ -109,8 +107,8 @@ $(function() {
             //$("#country").val(address[2]);
             //$("#locality").val(address[1]);
             $("#org-unit").val(orgUnit);
-            $("#common-name").val(nicId);
-            $("#org").val($("#org-id").val());
+            // $("#common-name").val(nicId);
+            // $("#org").val($("#org-id").val());
         }
 
 });
