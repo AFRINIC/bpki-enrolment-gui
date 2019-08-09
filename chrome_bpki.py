@@ -81,7 +81,7 @@ def generate_pem(nic_id: str, user_directory: str, password: str, csr: str):
 
     try:
         browser = webdriver.Chrome(base_directory + '/chromedriver', options=opts,
-                               service_args=['--verbose', '--log-directory=' + log_path])
+                                   service_args=['--verbose', '--log-directory=' + log_path])
         # browser = webdriver.Chrome(base_directory + '/chromedriver', options=opts)
     except WebDriverException as error:
         logger.error("Unable to launch chrome driver: %s -- NIC Handle: %s", error, nic_id)
@@ -227,7 +227,7 @@ def get_certificate(file_path):
             modified_time = os.path.getctime('/' + file_path)
             current_time = time.time()
 
-            if current_time - modified_time  <= 600:
+            if current_time - modified_time <= 600:
                 return send_from_directory(file_directory, filename=file_name, as_attachment=True)
             else:
                 abort(410)
