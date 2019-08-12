@@ -28,3 +28,4 @@ Only one browser is used at a time and hence, you can choose to install either C
 9. Configure Nginx server as required. 
 10. Start the required services thus, Nginx and the gunicorn server.
 
+**Note** Please ensure you create a cron job to delete all the files in downloads periodically.
