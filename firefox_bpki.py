@@ -223,7 +223,7 @@ def get_certificate(file_path):
         file_directory = '/' + '/'.join(path_arr[:len(path_arr) - 1])
 
         try:
-            modified_time = os.path.getctime('/' + file_path)
+            modified_time = os.path.getmtime('/' + file_path)
             current_time = time.time()
 
             if int(current_time - modified_time) <= 600:
